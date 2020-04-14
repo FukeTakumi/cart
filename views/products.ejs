@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>amazone</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>ベストセラー</h1>
+    <p>「ベストセラー」では、人気商品を中心に家具、キッチン用品、家電、ファッション、食品、飲料、日用品などを特別価格でご提供します。</p>
+    <% items.map((item)=>{ %>
+    <div class="item-wrapper">
+      <a href="/products/<%= item.id %>" class="item-name"><%=item.item_name%></a>
+      <p class="item-price"><%=item.price%></p>
+    </div>
+    <%}) %>
+  </body>
+</html>
