@@ -34,8 +34,9 @@ const params = [
     price:658
   }
 ];
-```
 
 params.map((param)=>{
   db.item.create(param);
 });
+
+```
