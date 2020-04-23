@@ -1,6 +1,17 @@
-商品のデータベース作成
+セットアップ手順
 
 ```
+$npm install
+$npx sequelize-cli db:create
+$npx sequelize-cli db:migrate
+```
+
+以下をapp.jsなどに貼り付けて
+1度だけ実行し、データベースとユーザーを作成してください
+
+```
+const db = require('./models/index');
+
 const params = [
   {
     name:"ワイヤレスマウス",
@@ -35,8 +46,18 @@ const params = [
   }
 ];
 
+//商品のデータベースの作成
 params.map((param)=>{
   db.item.create(param);
 });
 
+
+const user_params = {
+  name:'山田太郎',
+  email:'test@gmail.com',
+  password:'testpass'
+}
+
+//テスト用のユーザーの追加
+db.user.create(user_params);
 ```
