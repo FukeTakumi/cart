@@ -6,12 +6,20 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var productsRouter = require('./routes/products');
+var cartsRouter = require('./routes/carts');
+var usersRouter = require('./routes/users');
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
 var methodOverride = require('method-override');
 app.use(methodOverride(function (req, res) {
@@ -23,17 +31,10 @@ app.use(methodOverride(function (req, res) {
   }
 }));
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-//ここから
-const db = require('./models/index');
-
 app.use('/', indexRouter);
 app.use('/products', productsRouter);
+app.use('/carts', cartsRouter);
+app.use('/users', usersRouter);
 
 
 // catch 404 and forward to error handler

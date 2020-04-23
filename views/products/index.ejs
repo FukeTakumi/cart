@@ -5,11 +5,15 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
+    <h1>amazone</h1>
+    <p></p>
+    <!-- <a href="/users/signup">新規登録</a> -->
+    <!-- <a href="/users/login">ログイン</a> -->
     <h1>ベストセラー</h1>
     <p>「ベストセラー」では、人気商品を中心に家具、キッチン用品、家電、ファッション、食品、飲料、日用品などを特別価格でご提供します。</p>
     <% items.map((item)=>{ %>
     <div class="item-wrapper">
-      <a href="/products/<%= item.id %>" class="item-name"><%=item.item_name%></a>
+      <a href="/products/show/<%= item.id %>" class="item-name"><%=item.name%></a>
       <p class="item-price"><%=item.price%></p>
     </div>
     <%}) %>

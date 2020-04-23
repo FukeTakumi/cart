@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>amazone</title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+
+    <body>
+        <h1>商品詳細</h1>
+        <h1><%= item.name %></h1>
+        <p><%= item.price %></p>
+        <p>カートに追加する</p>
+        <form action="/products/show/<%= item.id %>" method="POST">
+            <input type="number" name="count" value="1">
+            <input type="submit">
+        </form>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="/javascripts/item.js"></script>
+    </body>
+</html>
