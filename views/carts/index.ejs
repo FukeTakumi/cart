@@ -10,8 +10,8 @@
     <% carts.map((cart)=>{ %>
         <% for(let i = 0;i < items.length;i++){ %>
             <% if(cart.item_id === items[i].id){ %>
-                <p><%=items[i].name%></p>
-                <p><%=cart.item_count%>こ</p>
+                <p><%=items[i].name%>が</p>
+                <p><%=cart.item_count%>個</p>
                 <p><%= items[i].price * cart.item_count %>円</p>
                 <form action="/carts/<%= cart.id %>" method="POST">
                     <input type="hidden" name="_method" value="delete">
@@ -25,7 +25,7 @@
         <% }; %>
     <% }); %>
     <p>合計：<%= priceSum %>円</p>
-    <a href="">注文確定</a>
+    <a href="/carts/confirm">注文確定</a>
     </br>
     <a href="/products">買い物を続ける</a>
 </body>

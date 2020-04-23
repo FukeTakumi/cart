@@ -8,7 +8,7 @@
     <h1>注文情報の編集</h1>
     <% for(let i = 0;i < items.length;i++){ %>
         <% if(cart.item_id === items[i].id){ %>
-            <p><%=items[i].name%>が</p>
+            <p><%=items[i].name%>：</p>
             <form action="/carts/<%= cart.item_id %>" method="POST">
                 <input type="hidden" name="_method" value="put">
                 <input type="number" value="<%=cart.item_count%>" name="item_count">
@@ -20,5 +20,6 @@
             </form>
         <% }; %>
     <% }; %>
+    <a href="/products">買い物を続ける</a>
 </body>
 </html>
