@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     underscored: true,
   });
   item.associate = function(models) {
-    // associations can be defined here
+    item.hasMany(models.cart);
   };
   return item;
 };

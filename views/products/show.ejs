@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>amazone</title>
+        <title>商品ページ</title>
         <link rel='stylesheet' href='/stylesheets/style.css' />
     </head>
 
     <body>
         <h1>商品詳細</h1>
-        <h1><%= item.name %></h1>
-        <p><%= item.price %></p>
-        <p>カートに追加する</p>
+        <h2><%= item.name %></h2>
+        <p><%= item.price %>円</p>
         <form action="/products/show/<%= item.id %>" method="POST">
             <input type="number" name="count" value="1">
-            <input type="submit">
+            <input type="submit" value="カートに追加する">
         </form>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

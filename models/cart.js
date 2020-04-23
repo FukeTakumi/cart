@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     underscored: true,
   });
   cart.associate = function(models) {
-    // associations can be defined here
+    cart.belongsTo(models.item);
+    cart.belongsTo(models.user);
   };
   return cart;
 };
