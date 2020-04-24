@@ -13,11 +13,11 @@
                 <p><%=items[i].name%>が</p>
                 <p><%=cart.item_count%>個</p>
                 <p><%= items[i].price * cart.item_count %>円</p>
-                <form action="/carts/<%= cart.id %>" method="POST">
+                <form action="/carts/delete/<%= cart.id %>" method="POST">
                     <input type="hidden" name="_method" value="delete">
                     <input type="submit" value="カートから削除">
                 </form>
-                <form action="/carts/<%= cart.item_id %>" method="GET">
+                <form action="/carts/edit/<%= cart.item_id %>" method="GET">
                     <input type="submit" value="注文情報を編集">
                 </form>
                 <% priceSum +=  items[i].price * cart.item_count%>

@@ -6,20 +6,16 @@
 </head>
 <body>
     <h1>注文情報の編集</h1>
-    <% for(let i = 0;i < items.length;i++){ %>
-        <% if(cart.item_id === items[i].id){ %>
-            <p><%=items[i].name%>：</p>
-            <form action="/carts/<%= cart.item_id %>" method="POST">
+    <%for(let i = 0; i < items.length; i++){%>
+        <%if(items[i].id === cart.item_id){%>
+            <p><%= items[i].name %>:</p>
+            <form action="/carts/edit/<%= cart.item_id %>" method="POST">
                 <input type="hidden" name="_method" value="put">
-                <input type="number" value="<%=cart.item_count%>" name="item_count">
+                <input type="number" value=<%= cart.item_count %> name="item_count">
                 <input type="submit" value="更新">
             </form>
-            <form action="/carts/<%= cart.id %>" method="POST">
-                <input type="hidden" name="_method" value="delete">
-                <input type="submit" value="カートから削除">
-            </form>
-        <% }; %>
-    <% }; %>
+        <%}%>
+    <%}%>
     <a href="/products">買い物を続ける</a>
 </body>
 </html>

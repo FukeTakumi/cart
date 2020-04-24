@@ -5,6 +5,25 @@
     <title>注文確定</title>
 </head>
 <body>
-    <p>注文を確定します</p>
+    <h1>注文の確認</h1>
+    <p>下記の内容で注文を確定します</p>
+    <% let priceSum = 0;%>
+    <% carts.map((cart)=>{ %>
+        <% for(let i = 0;i < items.length;i++){ %>
+            <% if(cart.item_id === items[i].id){ %>
+                <p><%=items[i].name%>が</p>
+                <p><%=cart.item_count%>個</p>
+                <p><%= items[i].price * cart.item_count %>円</p>
+                <% priceSum +=  items[i].price * cart.item_count%>
+            <% }; %>
+        <% }; %>
+    <% }); %>
+    <p>合計：<%= priceSum %>円</p>
+    <p>よろしいですか？</p>
+    <a href="/carts">カートに戻る</a>
+    <form action="/carts/finish" method="POST">
+        <input type="hidden" name="_method" value="delete">
+        <input type="submit" value="注文確定">
+    </form>
 </body>
 </html>

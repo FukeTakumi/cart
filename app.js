@@ -36,16 +36,6 @@ app.use('/products', productsRouter);
 app.use('/carts', cartsRouter);
 app.use('/users', usersRouter);
 
-const db = require('./models/index');
-
-const user_params = {
-  name:'山田太郎',
-  email:'test@gmail.com',
-  password:'testpass'
-}
-
-db.user.create(user_params);
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
