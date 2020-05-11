@@ -4,15 +4,19 @@ const db = require('../models/index');
 
 //カートの一覧表示
 router.get('/',(req,res)=>{
+    if(!req.user){
+        res.redirect('/users/new');
+    }
+    const user = req.user.dataValues
     const options = {
         include:[{
             model:db.cart
         }]
     };
 
-    db.user.findByPk(1,options).then((results_user)=>{
+    db.user.findByPk(user.id,options).then((results_user)=>{
         db.item.findAll().then((results_items)=>{
-            res.render('carts/index.ejs',{carts:results_user.carts,items:results_items});
+            res.render('carts/index.ejs',{user:results_user,items:results_items});
         });
     });//ユーザー1を商品明細の情報と紐づけ,商品の一覧情報とともに送信
 });
@@ -31,15 +35,15 @@ router.delete('/delete/:id',(req,res)=>{
 
 //注文情報の編集
 router.get('/edit/:id',(req,res)=>{
-    const filter = {
+    const filter={
         where:{
-            user_id:1,
-            item_id:req.params.id
+            item_id:req.params.id,
+            user_id:req.user.dataValues.id
         }
     }
-    db.cart.findAll(filter).then((results_cart)=>{
-        db.item.findAll().then((results_items)=>{
-            res.render('carts/edit.ejs',{cart:results_cart[0],items:results_items});
+    db.cart.findOne(filter).then((results_cart)=>{
+        db.item.findByPk(req.params.id).then((results_item)=>{
+            res.render('carts/edit.ejs',{cart:results_cart,item:results_item});
         });
     });
 });
@@ -48,6 +52,7 @@ router.get('/edit/:id',(req,res)=>{
 router.put('/edit/:id',(req,res)=>{
     const filter = {
         where:{
+            user_id:req.user.dataValues.id,
             item_id:req.params.id
         }
     };
@@ -61,15 +66,16 @@ router.put('/edit/:id',(req,res)=>{
 
 //注文確定の確認
 router.get('/confirm',(req,res)=>{
+    const user = req.user.dataValues
     const options = {
         include:[{
             model:db.cart
         }]
     };
 
-    db.user.findByPk(1,options).then((results_user)=>{
+    db.user.findByPk(user.id,options).then((results_user)=>{
         db.item.findAll().then((results_items)=>{
-            res.render('carts/confirm.ejs',{carts:results_user.carts,items:results_items});
+            res.render('carts/confirm.ejs',{user:results_user,items:results_items});
         });
     });
 });
@@ -78,7 +84,7 @@ router.get('/confirm',(req,res)=>{
 router.delete('/finish',(req,res)=>{
     const filter = {
         where:{
-            user_id:1
+            user_id:req.user.dataValues.id
         }
     };
     db.cart.destroy(filter).then((results)=>{

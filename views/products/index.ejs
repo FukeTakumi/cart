@@ -6,10 +6,16 @@
   </head>
   <body>
     <h1>amazone</h1>
-    <a href="/carts">カートを確認</a>
+    <%if(!loggedIn){%>
+      <p>ログインしてください</p>
+      <a href="/users/new">新規登録</a>
+      <a href="/login">ログイン</a>
+    <%}else{%>
+      <p><%= user.name %>様</p>
+      <a href="/carts">カートを確認</a>
+      <a href="/logout">ログアウト</a>
+    <%}%>
     <p></p>
-    <a href="/users/new">新規登録</a>
-    <a href="/login">ログイン</a>
     <h1>ベストセラー</h1>
     <p>「ベストセラー」では、人気商品を中心に家具、キッチン用品、家電、ファッション、食品、飲料、日用品などを特別価格でご提供します。</p>
     <% items.map((item)=>{ %>

@@ -5,9 +5,10 @@
     <title>商品カート</title>
 </head>
 <body>
-    <h1>商品カート</h1>
+    <h1><%=user.name%>の商品カート</h1>
+    <p></p>
     <% let priceSum = 0;%>
-    <% carts.map((cart)=>{ %>
+    <% user.carts.map((cart)=>{ %>
         <% for(let i = 0;i < items.length;i++){ %>
             <% if(cart.item_id === items[i].id){ %>
                 <p><%=items[i].name%>が</p>

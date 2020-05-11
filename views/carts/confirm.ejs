@@ -6,9 +6,10 @@
 </head>
 <body>
     <h1>注文の確認</h1>
+    <p><%=user.name%>様</p>
     <p>下記の内容で注文を確定します</p>
     <% let priceSum = 0;%>
-    <% carts.map((cart)=>{ %>
+    <% user.carts.map((cart)=>{ %>
         <% for(let i = 0;i < items.length;i++){ %>
             <% if(cart.item_id === items[i].id){ %>
                 <p><%=items[i].name%>が</p>

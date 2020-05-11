@@ -12,6 +12,14 @@ var app = express();
 var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy;
 
+const indexRouter = require('./routes/index');
+const productsRouter = require('./routes/products');
+const cartsRouter = require('./routes/carts');
+const usersRouter = require('./routes/users');
+const sessionsRouter = require('./routes/sessions');
+const db = require('./models/index');
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -22,17 +30,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-////
-
 app.use(session({
   secret: 'cats',
-  saveUninitialized: true,
-  cookie: { secure: true }
+  saveUninitialized: true
 }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
-var db = require('./models/index');
 
 //シリアライズ、デシリアライズ
 //データを保存して、通信の際にユーザーのデータを送れるようにする
@@ -43,22 +47,17 @@ passport.serializeUser((user, done) => {
 // 複合して認証
 passport.deserializeUser((id, done) => {
   db.user.findByPk(id).then((results) => {
-    console.log(results);
-    done(results);
+    done(null,results);
   }, (error) => {
-    done(error);
+    done(error,null);
   });
 });
 
 //認証部分
-passport.use(new LocalStrategy({
-  usernameField: 'userName',
-  passwordField: 'password'
-},
-  (userName, password, done) => {
+passport.use(new LocalStrategy((username, password, done) => {
     const options = {
       where: {
-        name: userName,
+        name: username,
         password: password
       }
     }
@@ -74,7 +73,6 @@ passport.use(new LocalStrategy({
       return done(error);
     });
   }));
-
 ////
 
 
@@ -87,12 +85,6 @@ app.use(methodOverride(function (req, res) {
     return method
   }
 }));
-
-const indexRouter = require('./routes/index');
-const productsRouter = require('./routes/products');
-const cartsRouter = require('./routes/carts');
-const usersRouter = require('./routes/users');
-const sessionsRouter = require('./routes/sessions');
 
 app.use('/', indexRouter);
 app.use('/products', productsRouter);

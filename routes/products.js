@@ -3,9 +3,10 @@ var router = express.Router();
 const db = require('../models/index');
 
 //商品の一覧表示
-router.get('/', (req, res)=>{
+router.get('/',(req, res)=>{
   db.item.findAll().then((results)=>{
-    res.render('products/index.ejs',{items:results});
+    console.log(!!req.user);
+    res.render('products/index.ejs',{items:results,user:req.user,loggedIn:!!req.user});
   });
 });
 
@@ -18,16 +19,20 @@ router.get('/show/:id', (req, res)=>{
 
 //商品をカートに追加
 router.post('/show/:id',(req,res)=>{
+  if(!req.user){
+    res.redirect('/users/new');
+  };
+  const user = req.user.dataValues
   const filter = {
     where:{
-      user_id:1,
+      user_id:user.id,
       item_id:req.params.id
     }
   }//ユーザー1で,かつ商品のidがreq.params.idのもの
 
   db.cart.findAll(filter).then((results)=>{
     if (results.length !== 0){
-      const new_item_count = Number(results[0].item_count) + Number(req.body.count);
+      const new_item_count = Number(results[0].item_count) + Number(req.body.item_count);
       const params_update = {
         item_count:new_item_count
       }
@@ -38,7 +43,7 @@ router.post('/show/:id',(req,res)=>{
 
     }else{
       const params_create = {
-        user_id:1,
+        user_id:user.id,
         item_id:req.params.id,
         item_count:req.body.count
       }
